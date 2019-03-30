@@ -16,7 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+ var app = {
+
+    // Instance variables, (or somthing close to that)
+
     // Application Constructor
     //this is where i would add any event Listeners such as page load, pause, resume
     initialize: function() {
@@ -42,6 +45,8 @@ var app = {
       //This calls the recived event method and sends the
       this.receivedEvent('deviceready');
 
+
+
     },
 
     //This handles the pause event,
@@ -59,6 +64,7 @@ var app = {
     onHomePage: function()
     {
         alert("HomePage Created");
+
     },
 
     // Update DOM on a Received Event
@@ -71,7 +77,26 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    // Camera code
+    //for the camera to work it need sto have a function for
+    //capturing photos
+    function CapturePhoto() {
+      //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
+    },
+    //Sucessfull attempt
+    function onPhotoDataSuccess(imageData)
+    {
+      //have a object on the screen to hold the image
+      //display the image
+    },
+    //unsucsesfull attempt
+    function onFail(message)
+    {
+      alert('Failed because : '+ message);
     }
+    //A method for storign these images in a location along with a tag
 };
 
 app.initialize();
