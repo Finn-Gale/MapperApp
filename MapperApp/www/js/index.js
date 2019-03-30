@@ -18,17 +18,38 @@
  */
 var app = {
     // Application Constructor
+    //this is where i would add any event Listeners such as page load, pause, resume
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+
+        //The string denotes the event, the second parameter deffines what the acting function should be
+        document.addEventListener('pause', this.onPause, false);
+
+        document.addEventListener('resume',this.onResume,false);
     },
 
     // deviceready Event Handler
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+    onDeviceReady: function()
+    {
+      //This calls the recived event method and sends the
+      this.receivedEvent('deviceready');
+
     },
+
+    onPause: function()
+    {
+
+    },
+
+    onResume: function()
+    {
+        alert("App Resumed");
+    },
+
+    //This handles the pause event,
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {

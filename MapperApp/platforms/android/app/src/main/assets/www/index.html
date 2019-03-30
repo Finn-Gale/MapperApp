@@ -31,17 +31,37 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
+
+
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
           <link href="jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+        <div class=""="app">
+
+          <h1>Apache Cordova</h1>
+          <div id="deviceready" class="blink">
+              <p class="event listening">Connecting to Device</p>
+              <p class="event received">Device is Ready</p>
+          </div>
+
+            <!--This page is the home page of the Mapper app -->
+            <div data-role="page", id="HomePage">
+
+              <!--This denotes the header of the home page  -->
+              <div data-role="header">
+              </div>
+
+              <!--This denotes the content of the home page  -->
+              <div data-role="content">
+                <p>Jam</p>
+              </div>
+
+              <!--This denotes the footer of the home page  -->
+              <div data-role="footer">
+              </div>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
