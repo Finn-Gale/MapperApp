@@ -26,7 +26,12 @@ var app = {
         document.addEventListener('pause', this.onPause, false);
 
         document.addEventListener('resume',this.onResume,false);
+
+        //this checks if the home Page has been loaded
+         $(document).on("pagecreate","#HomePage", this.onHomePage);
     },
+
+
 
     // deviceready Event Handler
     //
@@ -39,6 +44,7 @@ var app = {
 
     },
 
+    //This handles the pause event,
     onPause: function()
     {
 
@@ -49,7 +55,11 @@ var app = {
         alert("App Resumed");
     },
 
-    //This handles the pause event,
+
+    onHomePage: function()
+    {
+        alert("HomePage Created");
+    },
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
