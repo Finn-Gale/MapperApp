@@ -32,6 +32,9 @@
 
         //this checks if the home Page has been loaded
          $(document).on("pagecreate","#HomePage", this.onHomePage);
+
+         //this is goign to be a check when document is ready
+         $(document).ready(function() { console.log('Ready');});
     },
 
 
@@ -44,9 +47,6 @@
     {
       //This calls the recived event method and sends the
       this.receivedEvent('deviceready');
-
-
-
     },
 
     //This handles the pause event,
@@ -67,6 +67,7 @@
 
     },
 
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -82,17 +83,18 @@
     // Camera code
     //for the camera to work it need sto have a function for
     //capturing photos
-    function CapturePhoto() {
+    CapturePhoto: function()
+    {
       //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
     },
     //Sucessfull attempt
-    function onPhotoDataSuccess(imageData)
+    onPhotoDataSuccess: function(imageData)
     {
       //have a object on the screen to hold the image
       //display the image
     },
     //unsucsesfull attempt
-    function onFail(message)
+    onFail: function(message)
     {
       alert('Failed because : '+ message);
     }
