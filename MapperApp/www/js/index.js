@@ -45,19 +45,22 @@
     // 'pause', 'resume', etc.
     onDeviceReady: function()
     {
-      //This calls the recived event method and sends the
+      //This calls the recived event method and sends the event through
       this.receivedEvent('deviceready');
     },
 
     //This handles the pause event,
     onPause: function()
     {
-
+      //This calls the recived event method and sends the event through
+      this.receivedEvent('pause');
     },
 
     onResume: function()
     {
         alert("App Resumed");
+        //This calls the recived event method and sends the event through
+        this.receivedEvent('resume');
     },
 
 

@@ -40,58 +40,73 @@
 
           <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
           <script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
-          
-        <title>Hello World</title>
+
+        <title>MapperApp</title>
     </head>
     <body>
         <div class=""="app">
-
-          <h1>Apache Cordova</h1>
-          <div id="deviceready" class="blink">
-              <p class="event listening">Connecting to Device</p>
-              <p class="event received">Device is Ready</p>
-          </div>
 
             <!--This page is the home page of the Mapper app -->
             <div data-role="page", id="HomePage">
 
               <!--This denotes the header of the home page  -->
               <div data-role="header">
-              </div>
+                <h1>HomePage</h1>
+              </div><!--/Header-->
 
               <!--This denotes the content of the home page  -->
               <div data-role="content">
+
+                <h1>Apache Cordova</h1>
+
+                <div id="deviceready" class="blink">
+                    <p class="event listening">Connecting to Device</p>
+                    <p class="event received">Device is Ready</p>
+                </div><!--/CordovaStartUp-->
+
                 <p>Jam</p>
-                 <a href="#CameraPage">Go to CameraPage</a>
-              </div>
 
-              <!--This denotes the footer of the home page  -->
-              <div data-role="footer">
-              </div>
 
-              <!--This page is the camera page and will be where he user takes pictures  -->
-              <div data-role="page", id="CameraPage">
+              </div><!--/Content-->
 
-                <!-- This denotes the header for the camera page -->
+              <!--Persistant Footer -->
+              <div data-role="footer" data-id="mainFooter" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                      <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li><!--Link to Homepage -->
+                      <li><a href="#PhotoPage" data-transition="slidefade">Go to PhotoPage</a></li><!--Link to PhotoPageS -->
+                    </ul>
+                </div><!--/Navbar-->
+              </div><!--/Footer-->
+            </div> <!--/HomePage-->
+
+
+              <!--This page is the photo page and will be where he user takes pictures  -->
+              <div data-role="page", id="PhotoPage">
+
+                <!-- This denotes the header for the photo page -->
                 <div data-role="header">
+                  <h1>Camera Page</h1>
+                </div><!--/Header-->
 
-                </div>
-
-                <!-- This denotes the content area of the camera page -->
+                <!-- This denotes the content area of the photo page -->
                 <div data-role="content">
-                  <p>CameraPage</p>
-                </div>
 
-                <!--This denotes the footer for the -->
-                <div data-role="footer">
-                </div>
-              </div>
-            </div>
-        </div>
+                </div><!--/Content-->
 
+                <!--Persistant Footer -->
+                <div data-role="footer" data-id="mainFooter" data-position="fixed">
+                  <div data-role="navbar">
+                      <ul>
+                        <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li>
+                        <li><a href="~CameraPage" data-transition="slidefade">Go to CameraPage</a></li>
+                      </ul>
+                  </div><!--/Navbar-->
+                </div><!--/Footer-->
+              </div><!--/CameraPage-->
+
+            </div><!--/app-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-
-
     </body>
 </html>
