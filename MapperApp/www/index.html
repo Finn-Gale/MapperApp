@@ -74,14 +74,14 @@
                 <div data-role="navbar">
                     <ul>
                       <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li><!--Link to Homepage -->
-                      <li><a href="#PhotoPage" data-transition="slidefade">Go to PhotoPage</a></li><!--Link to PhotoPageS -->
+                      <li><button id="cameraButton" onclick="CapturePhoto();">Take Photo</button></li><!--Link to camera -->
                     </ul>
                 </div><!--/Navbar-->
               </div><!--/Footer-->
             </div> <!--/HomePage-->
 
 
-              <!--This page is the photo page and will be where he user takes pictures  -->
+              <!--This page is the photo page and will be where he users pictures are viewed after being taken  -->
               <div data-role="page", id="PhotoPage">
 
                 <!-- This denotes the header for the photo page -->
@@ -91,7 +91,8 @@
 
                 <!-- This denotes the content area of the photo page -->
                 <div data-role="content">
-
+                    <!--This is where the image is placed when taken -->
+                    <img style="display:none;width:200px;height:200px;", id="userPhoto" src="" />
                 </div><!--/Content-->
 
                 <!--Persistant Footer -->
@@ -99,7 +100,7 @@
                   <div data-role="navbar">
                       <ul>
                         <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li>
-                        <li><a href="~CameraPage" data-transition="slidefade">Go to CameraPage</a></li>
+                        <li><button id="cameraButton" onclick="CapturePhoto();">Take Photo</button>Go to CameraPage</a></li>
                       </ul>
                   </div><!--/Navbar-->
                 </div><!--/Footer-->
