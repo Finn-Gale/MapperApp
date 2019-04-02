@@ -19,7 +19,8 @@
  var app = {
 
     // Instance variables, (or somthing close to that)
-
+    //var destinationType i used by the camera in order to take photos
+    var destinationType;
     // Application Constructor
     //this is where i would add any event Listeners such as page load, pause, resume
     initialize: function() {
@@ -47,6 +48,10 @@
     {
       //This calls the recived event method and sends the event through
       this.receivedEvent('deviceready');
+
+      //This sets up the camera
+      //this is called hear because i ned to be sure that there is a device that has a camera
+      destinationType=navigator.camera.DestinationType;
     },
 
     //This handles the pause event,
