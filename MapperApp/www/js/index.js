@@ -16,11 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ var destinationType;
  var app = {
 
     // Instance variables, (or somthing close to that)
     //var destinationType i used by the camera in order to take photos
-    var destinationType;
+
     // Application Constructor
     //this is where i would add any event Listeners such as page load, pause, resume
     initialize: function() {
@@ -36,6 +37,8 @@
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
+
+
     },
 
 
@@ -52,6 +55,8 @@
       //This sets up the camera
       //this is called hear because i ned to be sure that there is a device that has a camera
       destinationType=navigator.camera.DestinationType;
+
+      $('#cameraButton').on('click', this.CapturePhoto());
     },
 
     //This handles the pause event,
@@ -93,13 +98,23 @@
     //capturing photos
     CapturePhoto: function()
     {
+      alert('Photo attempt');
       //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
+      //This function calls the getpictur method of the camera, on a sucesfful capture the picture is sent to the photo screen, if a fail occurs a popup will appear
+      navigator.camera.getPicture(this.onPhotoDataSuccess, this.onFail, { quality: 100, destinationType: destinationType.DATA_URL});
     },
     //Sucessfull attempt
     onPhotoDataSuccess: function(imageData)
     {
+      //navigaet to #Photopage
+      $.mobile.navigate("#PhotoPage");
+
       //have a object on the screen to hold the image
       //display the image
+      var photoView =  document.getElementById('userPhoto');
+      photoView.style.display = 'block';
+      photoView.src ="data:image/jpeg;base64," + imageData;
+
     },
     //unsucsesfull attempt
     onFail: function(message)

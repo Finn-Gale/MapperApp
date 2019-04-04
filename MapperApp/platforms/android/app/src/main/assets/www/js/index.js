@@ -16,7 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+ var destinationType;
+ var app = {
+
+    // Instance variables, (or somthing close to that)
+    //var destinationType i used by the camera in order to take photos
+
     // Application Constructor
     //this is where i would add any event Listeners such as page load, pause, resume
     initialize: function() {
@@ -26,7 +31,17 @@ var app = {
         document.addEventListener('pause', this.onPause, false);
 
         document.addEventListener('resume',this.onResume,false);
+
+        //this checks if the home Page has been loaded
+         $(document).on("pagecreate","#HomePage", this.onHomePage);
+
+         //this is goign to be a check when document is ready
+         $(document).ready(function() { console.log('Ready');});
+
+
     },
+
+
 
     // deviceready Event Handler
     //
@@ -34,22 +49,37 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function()
     {
-      //This calls the recived event method and sends the
+      //This calls the recived event method and sends the event through
       this.receivedEvent('deviceready');
 
+      //This sets up the camera
+      //this is called hear because i ned to be sure that there is a device that has a camera
+      destinationType=navigator.camera.DestinationType;
+
+      $('#cameraButton').on('click', this.CapturePhoto());
     },
 
+    //This handles the pause event,
     onPause: function()
     {
-
+      //This calls the recived event method and sends the event through
+      this.receivedEvent('pause');
     },
 
     onResume: function()
     {
         alert("App Resumed");
+        //This calls the recived event method and sends the event through
+        this.receivedEvent('resume');
     },
 
-    //This handles the pause event,
+
+    onHomePage: function()
+    {
+        alert("HomePage Created");
+
+    },
+
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -61,7 +91,37 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    // Camera code
+    //for the camera to work it need sto have a function for
+    //capturing photos
+    CapturePhoto: function()
+    {
+      alert('Photo attempt');
+      //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
+      //This function calls the getpictur method of the camera, on a sucesfful capture the picture is sent to the photo screen, if a fail occurs a popup will appear
+      navigator.camera.getPicture(this.onPhotoDataSuccess, this.onFail, { quality: 100, destinationType: destinationType.DATA_URL});
+    },
+    //Sucessfull attempt
+    onPhotoDataSuccess: function(imageData)
+    {
+      //navigaet to #Photopage
+      $.mobile.navigate("#PhotoPage");
+
+      //have a object on the screen to hold the image
+      //display the image
+      var photoView =  document.getElementById('userPhoto');
+      photoView.style.display = 'block';
+      photoView.src ="data:image/jpeg;base64," + imageData;
+
+    },
+    //unsucsesfull attempt
+    onFail: function(message)
+    {
+      alert('Failed because : '+ message);
     }
+    //A method for storign these images in a location along with a tag
 };
 
 app.initialize();

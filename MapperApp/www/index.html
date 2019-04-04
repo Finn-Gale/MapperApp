@@ -44,10 +44,10 @@
         <title>MapperApp</title>
     </head>
     <body>
-        <div class=""="app">
+        <div class="app">
 
             <!--This page is the home page of the Mapper app -->
-            <div data-role="page", id="HomePage">
+            <div data-role="page" id="HomePage">
 
               <!--This denotes the header of the home page  -->
               <div data-role="header">
@@ -56,7 +56,6 @@
 
               <!--This denotes the content of the home page  -->
               <div data-role="content">
-
                 <h1>Apache Cordova</h1>
 
                 <div id="deviceready" class="blink">
@@ -66,7 +65,6 @@
 
                 <p>Jam</p>
 
-
               </div><!--/Content-->
 
               <!--Persistant Footer -->
@@ -74,7 +72,7 @@
                 <div data-role="navbar">
                     <ul>
                       <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li><!--Link to Homepage -->
-                      <li><button id="cameraButton" onclick="CapturePhoto();">Take Photo</button></li><!--Link to camera -->
+                      <li><button id="cameraButton" onclick="CapturePhoto();" data-icon="camera"></button></li><!--Link to camera -->
                     </ul>
                 </div><!--/Navbar-->
               </div><!--/Footer-->
@@ -82,7 +80,7 @@
 
 
               <!--This page is the photo page and will be where he users pictures are viewed after being taken  -->
-              <div data-role="page", id="PhotoPage">
+              <div data-role="page" id="PhotoPage">
 
                 <!-- This denotes the header for the photo page -->
                 <div data-role="header">
@@ -92,7 +90,7 @@
                 <!-- This denotes the content area of the photo page -->
                 <div data-role="content">
                     <!--This is where the image is placed when taken -->
-                    <img style="display:none;width:200px;height:200px;", id="userPhoto" src="" />
+                    <img style="display:none;width:200px;height:200px;" id="userPhoto" src="" alt="Image Missing"/>
                 </div><!--/Content-->
 
                 <!--Persistant Footer -->
@@ -100,11 +98,11 @@
                   <div data-role="navbar">
                       <ul>
                         <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li>
-                        <li><button id="cameraButton" onclick="CapturePhoto();">Take Photo</button>Go to CameraPage</a></li>
+                        <li><button id="cameraButton" onclick="CapturePhoto();" data-icon="camera">Take Photo</button></li>
                       </ul>
                   </div><!--/Navbar-->
                 </div><!--/Footer-->
-              </div><!--/CameraPage-->
+              </div><!--/PhotoPage-->
 
             </div><!--/app-->
         <script type="text/javascript" src="cordova.js"></script>
