@@ -36,7 +36,9 @@
         document.addEventListener('resume',this.onResume,false);
 
         //this checks if the home Page has been loaded
-         $(document).on("pagecreate", this.onPageInit);
+         $(document).on("pagecreate","#HomePage", this.onHomePageInit);
+         $(document).on("pagecreate","#PhotoPage", this.onPhotoPageInit);
+         $(document).on("pagecreate","#DataPage", this.onDataPageInit);
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
@@ -75,10 +77,28 @@
     },
 
 
-    onPageInit: function()
+    onHomePageInit: function()
     {
-      
+      alert("Home");
       $('#cameraButton').on('click', function() {
+      app.CapturePhoto();
+      });
+
+    },
+
+    onPhotoPageInit: function()
+    {
+      alert("photo");
+      $('#cameraButton_p').on('click', function() {
+      app.CapturePhoto();
+      });
+
+    },
+
+    onDataPageInit: function()
+    {
+      alert("Data");
+      $('#cameraButton_d').on('click', function() {
       app.CapturePhoto();
       });
 
