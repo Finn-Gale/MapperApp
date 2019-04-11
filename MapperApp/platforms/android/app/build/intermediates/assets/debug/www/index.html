@@ -39,6 +39,9 @@
         <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
         <script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 
+        <!-- This sets up the connection between the HTML page and thew backendless js file, created by backendless -->
+        <script src="js/backendless.min.js" type="text/javascript"></script>
+
         <title>MapperApp</title>
     </head>
     <body>
@@ -69,8 +72,9 @@
               <div data-role="footer" data-id="mainFooter" data-position="fixed">
                 <div data-role="navbar">
                     <ul>
-                      <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li><!--Link to Homepage -->
-                      <li><button id="cameraButton" data-icon="camera"></button></li><!--Link to camera -->
+                      <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
+                      <li><button id="cameraButton" data-icon="camera" data-transition="slidefade"></button></li><!--Link to camera -->
+                      <li><a href="#DataPage" data-icon="grid" data-transition="slidefade"></a></li><!--Link to DataPage -->
                     </ul>
                 </div><!--/Navbar-->
               </div><!--/Footer-->
@@ -89,18 +93,45 @@
                 <div data-role="content">
                     <!--This is where the image is placed when taken -->
                     <img style="display:none;width:200px;height:200px;" id="userPhoto" src="" alt="Image Missing"/>
+
+                    <!-- This is where the text is inputed to go along with the image when saved -->
+                    <input type="text" name="noteInput" id="note" value="" placeholder="Add Note"/>
                 </div><!--/Content-->
 
                 <!--Persistant Footer -->
                 <div data-role="footer" data-id="mainFooter" data-position="fixed">
                   <div data-role="navbar">
                       <ul>
-                        <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li>
-                        <li><button id="cameraButton" onclick="CapturePhoto();" data-icon="camera">Take Photo</button></li>
+                        <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
+                        <li><button id="cameraButton" data-icon="camera" data-transition="slidefade"></button></li><!--Link to camera -->
+                        <li><a href="#DataPage" data-icon="grid" data-transition="slidefade"></a></li><!--Link to DataPage -->
                       </ul>
                   </div><!--/Navbar-->
                 </div><!--/Footer-->
               </div><!--/PhotoPage-->
+
+              <!--This page is for viewing data from the backendless page -->
+              <div data-role="page" id="DataPage">
+
+                <!--This denotes the header of the data page  -->
+                <div data-role="header">
+                  <h1>Data Page</h1>
+                </div><!--/header -->
+
+                <!--This denotes the content section of the data page  -->
+                <div data-role ="content">
+                </div><!--/Conent -->
+
+                <!-- This denotes the persistant footer of the data page -->
+                <div data-role="navbar">
+                    <ul>
+                      <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
+                      <li><button id="cameraButton" data-icon="camera" data-transition="slidefade"></button></li><!--Link to camera -->
+                      <li><a href="#DataPage" data-icon="grid" data-transition="slidefade"></a></li><!--Link to DataPage -->
+                    </ul>
+                </div><!--/Navbar-->
+              </div><!--/Footer-->
+              </div><!--/DataPage -->
 
             </div><!--/app-->
         <script type="text/javascript" src="cordova.js"></script>

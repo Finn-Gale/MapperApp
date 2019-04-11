@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+//This sets up the link between this app and the Backendless service
+ //Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","39E21061-31BF-47A8-FF88-B761C6E88D00");
  var destinationType;
  var app = {
 
@@ -33,7 +36,7 @@
         document.addEventListener('resume',this.onResume,false);
 
         //this checks if the home Page has been loaded
-         $(document).on("pagecreate","#HomePage", this.onHomePage);
+         $(document).on("pagecreate", this.onPageInit);
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
@@ -56,9 +59,7 @@
       //this is called hear because i ned to be sure that there is a device that has a camera
       destinationType=navigator.camera.DestinationType;
 
-      $('#cameraButton').on('click', function() {
-      app.CapturePhoto();
-    });
+
     },
 
     //This handles the pause event,
@@ -70,15 +71,16 @@
 
     onResume: function()
     {
-        alert("App Resumed");
-        //This calls the recived event method and sends the event through
-        this.receivedEvent('resume');
+
     },
 
 
-    onHomePage: function()
+    onPageInit: function()
     {
-        alert("HomePage Created");
+      
+      $('#cameraButton').on('click', function() {
+      app.CapturePhoto();
+      });
 
     },
 
