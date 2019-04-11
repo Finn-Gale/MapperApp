@@ -56,7 +56,9 @@
       //this is called hear because i ned to be sure that there is a device that has a camera
       destinationType=navigator.camera.DestinationType;
 
-      $('#cameraButton').on('click', this.CapturePhoto());
+      $('#cameraButton').on('click', function() {
+        alert("PhotoTime");
+    });
     },
 
     //This handles the pause event,
