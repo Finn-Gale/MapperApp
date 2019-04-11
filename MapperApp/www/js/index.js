@@ -57,7 +57,7 @@
       destinationType=navigator.camera.DestinationType;
 
       $('#cameraButton').on('click', function() {
-        alert("PhotoTime");
+      app.CapturePhoto();
     });
     },
 

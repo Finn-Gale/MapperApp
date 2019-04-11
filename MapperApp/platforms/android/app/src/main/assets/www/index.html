@@ -31,15 +31,13 @@
         <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
+       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
+        <link href="jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
 
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-          <link href="jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
-
-
-          <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
-          <script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 
         <title>MapperApp</title>
     </head>
@@ -72,7 +70,7 @@
                 <div data-role="navbar">
                     <ul>
                       <li><a href="#HomePage" data-transition="slidefade">Go to HomePage</a></li><!--Link to Homepage -->
-                      <li><button id="cameraButton" onclick="CapturePhoto();" data-icon="camera"></button></li><!--Link to camera -->
+                      <li><button id="cameraButton" data-icon="camera"></button></li><!--Link to camera -->
                     </ul>
                 </div><!--/Navbar-->
               </div><!--/Footer-->
