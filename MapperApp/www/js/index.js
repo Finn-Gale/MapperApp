@@ -18,7 +18,7 @@
  */
 
 //This sets up the link between this app and the Backendless service
- //Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","39E21061-31BF-47A8-FF88-B761C6E88D00");
+ Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
  var destinationType;
  var app = {
 
@@ -43,6 +43,9 @@
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
 
+         //NOT MINE BE SURE TO DELETE
+         // this line goes into the app initialization block
+         document.getElementById('files').addEventListener('change', this.handleFileSelect, false);
 
     },
 
@@ -91,6 +94,11 @@
       alert("photo");
       $('#cameraButton_p').on('click', function() {
       app.CapturePhoto();
+      });
+
+      //sets up the listener for the save button
+      $('#SaveButton').on('click', function(){
+        app.uploadPicture();
       });
 
     },
@@ -144,8 +152,33 @@
     onFail: function(message)
     {
       alert('Failed because : '+ message);
-    }
-    //A method for storign these images in a location along with a tag
-};
+    },
 
+
+    //A method for storign these images in a location along with a note
+    uploadPicture: function()
+    {
+      var callback = {};
+
+        callback.success = function(result)
+        {
+          alert( "File successfully uploaded. Path to download: " + result.fileURL );
+        }
+
+        callback.fault = function(result)
+        {
+          alert( "error - " + result.message );
+        }
+
+        Backendless.Files.upload( files, "my-folder", callback );
+
+      },
+
+
+      //NOT MINE DELETE
+       handleFileSelect: function(evt)
+{
+   files = evt.target.files; // FileList object
+},
+};
 app.initialize();
