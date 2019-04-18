@@ -42,11 +42,6 @@
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
-
-         //NOT MINE BE SURE TO DELETE
-         // this line goes into the app initialization block
-         document.getElementById('files').addEventListener('change', this.handleFileSelect, false);
-
     },
 
 
@@ -82,11 +77,19 @@
 
     onHomePageInit: function()
     {
-      alert("Home");
+
       $('#cameraButton').on('click', function() {
       app.CapturePhoto();
       });
 
+
+      Backendless.Data.of("TestData").find().then(app.processData).catch(app.onFail);
+
+    },
+
+    processData: function(tData)
+    {
+      alert(tData[0].TestString);
     },
 
     onPhotoPageInit: function()
@@ -97,15 +100,15 @@
       });
 
       //sets up the listener for the save button
-      $('#SaveButton').on('click', function(){
-        app.uploadPicture();
+      $('#SaveNote').on('click', function(){
+        app.onNote();
       });
 
     },
 
     onDataPageInit: function()
     {
-      alert("Data");
+
       $('#cameraButton_d').on('click', function() {
       app.CapturePhoto();
       });
@@ -130,7 +133,6 @@
     //capturing photos
     CapturePhoto: function()
     {
-      alert('Photo attempt');
       //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
       //This function calls the getpictur method of the camera, on a sucesfful capture the picture is sent to the photo screen, if a fail occurs a popup will appear
       navigator.camera.getPicture(this.onPhotoDataSuccess, this.onFail, { quality: 100, destinationType: destinationType.DATA_URL});
@@ -155,30 +157,11 @@
     },
 
 
-    //A method for storign these images in a location along with a note
-    uploadPicture: function()
+    //Backendless note upload
+    onNote: function()
     {
-      var callback = {};
 
-        callback.success = function(result)
-        {
-          alert( "File successfully uploaded. Path to download: " + result.fileURL );
-        }
+    },
 
-        callback.fault = function(result)
-        {
-          alert( "error - " + result.message );
-        }
-
-        Backendless.Files.upload( files, "my-folder", callback );
-
-      },
-
-
-      //NOT MINE DELETE
-       handleFileSelect: function(evt)
-{
-   files = evt.target.files; // FileList object
-},
 };
 app.initialize();
