@@ -77,24 +77,26 @@
 
     onHomePageInit: function()
     {
-      alert("Home");
+
       $('#cameraButton').on('click', function() {
       app.CapturePhoto();
       });
 
-      alert("reached call");
-      Backendless.Data.of("TestData").find().then(app.processData).catch(app.onFail);
+
+
 
     },
 
     processData: function(tData)
     {
-      alert(tData[0].TestString);
+      for(var i=0; i < tData.length; i++)
+      {
+        $('#dataList').append("<li>"+tData[i].TestString+"</li>");
+      }
     },
 
     onPhotoPageInit: function()
     {
-      alert("photo");
       $('#cameraButton_p').on('click', function() {
       app.CapturePhoto();
       });
@@ -108,11 +110,18 @@
 
     onDataPageInit: function()
     {
-      alert("Data");
+
       $('#cameraButton_d').on('click', function() {
       app.CapturePhoto();
       });
 
+      //THis clears the dataList
+      $('#dataList').empty();
+
+      //this calls the backendless table call
+      Backendless.Data.of("TestData").find().then(app.processData).catch(app.onFail);
+
+      $('#dataList').listview('refresh');
     },
 
 
@@ -133,7 +142,6 @@
     //capturing photos
     CapturePhoto: function()
     {
-      alert('Photo attempt');
       //call the navigator.camera.getPicture(success, fail, camera/imagedata) funcction
       //This function calls the getpictur method of the camera, on a sucesfful capture the picture is sent to the photo screen, if a fail occurs a popup will appear
       navigator.camera.getPicture(this.onPhotoDataSuccess, this.onFail, { quality: 100, destinationType: destinationType.DATA_URL});
@@ -157,11 +165,31 @@
       alert('Failed because : '+ message);
     },
 
-
+    onNoteSuccess: function(savedNote)
+    {
+      alert('Saved new note '+ savedNote.val());
+    },
     //Backendless note upload
     onNote: function()
     {
-      alert("Button Working")
+          //Grabs the value of the note input box
+      var noteVal = $('#note').val();
+
+      //cheks if val is empty
+      if(noteVal != "")
+      {
+        //creates a new object to stor the note text
+        var newNote ={};
+        newNote.TestString = noteVal;
+
+        //this calls the upload of the data to the backendless table
+        Backendless.Data.of("TestData").save(newNote).then(app.onNoteSuccess).catch(app.onFail);
+      }
+      else
+      {
+        alert('No Note');
+      }
+
     },
 
 };
