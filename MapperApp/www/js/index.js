@@ -42,6 +42,10 @@
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
+
+
+         //NOT MINE DELETE AFTER use
+         document.getElementById('files').addEventListener('change', app.handleFileSelect, false);
     },
 
 
@@ -82,7 +86,9 @@
       app.CapturePhoto();
       });
 
-
+      $('#SaveFile').on('click', function(){
+        app.UploadFile();
+      });
 
 
     },
@@ -169,6 +175,7 @@
     {
       alert('Saved new note '+ savedNote);
     },
+
     //Backendless note upload
     onNote: function()
     {
@@ -192,5 +199,28 @@
 
     },
 
+     handleFileSelect: function(evt)
+    {
+      alert('file Changed');
+       files = evt.target.files; // FileList object
+    },
+
+    //This method is used to upload a file
+    UploadFile: function()
+    {
+      var UploadResult ={};
+
+      UploadResult.success = function(result)
+      {
+        alert( "File successfully uploaded. Path to download: " + result.fileURL );
+      }
+
+      UploadResult.fault = function(result)
+      {
+        alert( "error - " + result.message );
+      }
+
+      Backendless.Files.upload( files, "TestFiles", UploadResult );
+    },
 };
 app.initialize();

@@ -82,7 +82,9 @@
       app.CapturePhoto();
       });
 
-
+      $('#SaveFile').on('click', function(){
+        app.UploadFile();
+      });
 
 
     },
@@ -167,8 +169,9 @@
 
     onNoteSuccess: function(savedNote)
     {
-      alert('Saved new note '+ savedNote.val());
+      alert('Saved new note '+ savedNote);
     },
+
     //Backendless note upload
     onNote: function()
     {
@@ -192,5 +195,25 @@
 
     },
 
+
+    //This method is used to upload a file
+    UploadFile: function()
+    {
+      var newFile = $('#pickFile').val();
+
+      var UploadResult ={};
+
+      UploadResult.success = function(result)
+      {
+        alert( "File successfully uploaded. Path to download: " + result.fileURL );
+      }
+
+      UploadResult.fault = function(result)
+      {
+        alert( "error - " + result.message );
+      }
+
+      Backendless.Files.upload( newFile, "TestFiles", UploadResult );
+    },
 };
 app.initialize();
