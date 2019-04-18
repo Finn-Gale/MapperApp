@@ -19,6 +19,7 @@
 
 //This sets up the link between this app and the Backendless service
  Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
+
  var destinationType;
  var app = {
 
@@ -208,19 +209,12 @@
     //This method is used to upload a file
     UploadFile: function()
     {
-      var UploadResult ={};
-
-      UploadResult.success = function(result)
-      {
-        alert( "File successfully uploaded. Path to download: " + result.fileURL );
-      }
-
-      UploadResult.fault = function(result)
-      {
-        alert( "error - " + result.message );
-      }
-
-      Backendless.Files.upload( files, "TestFiles", UploadResult );
+    Backendless.Files.upload( files, "TestFiles").then(app.UploadResult).catch(app.onFail);
     },
+
+    UploadResult: function(result)
+    {
+      alert( "File successfully uploaded. Path to download: " + result.fileURL );
+    }
 };
 app.initialize();
