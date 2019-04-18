@@ -42,6 +42,10 @@
 
          //this is goign to be a check when document is ready
          $(document).ready(function() { console.log('Ready');});
+
+
+         //NOT MINE DELETE AFTER use
+         document.getElementById('files').addEventListener('change', app.handleFileSelect, false);
     },
 
 
@@ -195,12 +199,15 @@
 
     },
 
+     handleFileSelect: function(evt)
+    {
+      alert('file Changed');
+       files = evt.target.files[0]; // FileList object
+    },
 
     //This method is used to upload a file
     UploadFile: function()
     {
-      var newFile = $('#pickFile').val();
-
       var UploadResult ={};
 
       UploadResult.success = function(result)
@@ -213,7 +220,7 @@
         alert( "error - " + result.message );
       }
 
-      Backendless.Files.upload( newFile, "TestFiles", UploadResult );
+      Backendless.Files.upload( files, "TestFiles", this.UploadResult );
     },
 };
 app.initialize();

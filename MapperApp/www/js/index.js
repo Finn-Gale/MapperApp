@@ -202,7 +202,7 @@
      handleFileSelect: function(evt)
     {
       alert('file Changed');
-       files = evt.target.files; // FileList object
+       files = evt.target.files[0]; // FileList object
     },
 
     //This method is used to upload a file
