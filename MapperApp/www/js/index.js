@@ -21,6 +21,7 @@
 Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
 
 var destinationType;
+var thisUser;
 var app = {
 
   // Instance variables, (or somthing close to that)
@@ -38,8 +39,8 @@ var app = {
     document.addEventListener('resume',this.onResume,false);
 
     //this checks if the home Page has been loaded
-    $(document).on("pagecreate","#HomePage", this.onHomePageInit);
-    $(document).on("pagecreate","#PhotoPage", this.onPhotoPageInit);
+    $(document).on("pageshow","#HomePage", this.onHomePageInit);
+    $(document).on("pageshow","#PhotoPage", this.onPhotoPageInit);
     $(document).on("pageshow","#DataPage", this.onDataPageInit);
 
     //this is goign to be a check when document is ready
@@ -62,14 +63,14 @@ var app = {
     //this is called hear because i ned to be sure that there is a device that has a camera
     destinationType=navigator.camera.DestinationType;
 
-
+    //this sets teh user to nothing
+    thisUser = "";
   },
 
   //This handles the pause event,
   onPause: function()
   {
-    //This calls the recived event method and sends the event through
-    this.receivedEvent('pause');
+
   },
 
   onResume: function()
@@ -80,16 +81,11 @@ var app = {
 
   onHomePageInit: function()
   {
-
+    //Sets up the camera button
     $('#cameraButton').on('click', function() {
     app.CapturePhoto();
     });
-
-    $('#SaveFile').on('click', function(){
-    app.UploadFile();
-    });
-
-
+    
   },
 
   processData: function(tData)
