@@ -57,18 +57,13 @@
 
               <!--This denotes the content of the home page  -->
               <div data-role="content">
-                <h1>Apache Cordova</h1>
+                <h1>Mapper App</h1>
 
                 <div id="deviceready" class="blink">
                     <p class="event listening">Connecting to Device</p>
                     <p class="event received">Device is Ready</p>
                 </div><!--/CordovaStartUp-->
 
-                <p>Jam</p>
-
-                <input type="file" id="files" name="files[]" multiple="">
-
-                <input type="button" value="Save file" id="SaveFile">
               </div><!--/Content-->
 
               <!--Persistant Footer -->
@@ -89,18 +84,20 @@
 
                 <!-- This denotes the header for the photo page -->
                 <div data-role="header">
-                  <h1>Camera Page</h1>
+                  <h1>Upload Photos</h1>
                 </div><!--/Header-->
 
                 <!-- This denotes the content area of the photo page -->
                 <div data-role="content">
                     <!--This is where the image is placed when taken -->
-                    <image style="display:none;width:200px;height:200px;" id="userPhoto" src="" alt="Image Missing"/>
+                    <image style="display:none;width:200px;height:250px;" id="userPhoto" src="" alt="Image Missing"/>
 
                     <!-- This is where the text is inputed to go along with the image when saved -->
                     <input type="text" name="noteInput" id="note" value="" placeholder="Add Note"/>
                     <!--This Input button is used to upload the image and note to backendless-->
-                    <input type="button" value="Save Note" id="SaveNote">
+                    <input type="button" value="Save Data" id="SavePin" disabled>
+
+                    <input id="photoData" value="Jam">
 
                 </div><!--/Content-->
 
