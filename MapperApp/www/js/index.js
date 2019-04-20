@@ -40,7 +40,7 @@ var app = {
     //this checks if the home Page has been loaded
     $(document).on("pagecreate","#HomePage", this.onHomePageInit);
     $(document).on("pagecreate","#PhotoPage", this.onPhotoPageInit);
-    $(document).on("pagecreate","#DataPage", this.onDataPageInit);
+    $(document).on("pageshow","#DataPage", this.onDataPageInit);
 
     //this is goign to be a check when document is ready
     $(document).ready(function() { console.log('Ready');});
@@ -96,8 +96,10 @@ var app = {
   {
     for(var i=0; i < tData.length; i++)
     {
-      // $('#dataList').append("<li>"+tData[i].TestString+"</li>");
-      $('#dataList').append("<li><image style='display:none;width:200px;height:250px;' src='" +tData[i].Picture+"' alt='Image Missing'></li>");
+
+    //  $('#dataList').append("<li><image style='display:none;width:200px;height:250px;' src='" +tData[i].Picture+"' alt='Image Missing'></li>");
+
+      $('#dataList').append("<li>"+"<image style='display:block;width:200px;height:250px;' src='"+tData[i].Picture+"'</li>");
       $('#dataList').append("<li>"+tData[i].Text+"</li>");
     }
   },
