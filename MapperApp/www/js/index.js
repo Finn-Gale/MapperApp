@@ -133,7 +133,8 @@
 
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function(id)
+    {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -164,6 +165,9 @@
       var photoView =  document.getElementById('userPhoto');
       photoView.style.display = 'block';
       photoView.src ="data:image/jpeg;base64," + imageData;
+
+      var newFile = app.ConvertBase64toFile(imageData,"image/jpeg" );
+
 
     },
     //unsucsesfull attempt
@@ -203,7 +207,7 @@
      handleFileSelect: function(evt)
     {
       alert('file Changed');
-       files = evt.target.files[0]; // FileList object
+      files = evt.target.files[0]; // FileList object
     },
 
     //This method is used to upload a file
@@ -215,6 +219,50 @@
     UploadResult: function(result)
     {
       alert( "File successfully uploaded. Path to download: " + result.fileURL );
-    }
+    },
+
+    //THis function takes base 64 data wich is provided by bthe camera and converts it to a file which can be stored and uploaded to Backendless
+    //The function takes in the image data which is the base64 data, and the format which de4fines what type of file is produced
+    //The ideas that went into this code were heavily influenced by commenter Jürgen 'Kashban' Wahlmann on Stack overflow https://stackoverflow.com/questions/21227078/convert-base64-to-image-in-javascript-jquery
+    ConvertBase64toFile: function(imageData, contentType)
+    {
+      alert("Converting File")
+        contentType = contentType || '';
+      //declare a variable for the slice size of the portion of data being worked on, this is to prevent the system form havign to deal with too much information at once, preventing a Out of memmory error
+      var sliceSize = 1024;
+      //this decodes the image data, this allows it to be processed into a file
+      var decodeChar = atob(imageData);
+      //this holds the leng of decodeChar
+      var CharLength = decodeChar.length;
+      //This calculates how many slices the data needs to be portioned into and returns an int for this value using the celing function
+      var sliceCount = Math.ceil(CharLength/sliceSize);
+      //this creates an array of lenght sliceCount
+      var imageArray = new Array(sliceCount);
+
+      //THis for loop cycles through each slice and converts each character to a UTF-16 code using the charcCodeAt function
+      for(var sIndex = 0; sIndex < sliceCount; ++sIndex)
+      {
+        //varianle for the start point of the slice
+        var startP = sIndex * sliceSize;
+        //var for the end point in the slice (either the end of the data or at startpoint + slice size, whichever is smaller)
+        var endP = Math.min(startP+ sliceSize, CharLength);
+
+      
+        //Array for holding all the UTF-16 codes for the current slice
+        var currentBytes = new Array(endP - startP);
+        for( var offset = startP, i =0; offset < endP; ++i, ++offset)
+        {
+          //converts to UTF-16
+            currentBytes[i] = decodeChar[offset].charCodeAt(0);
+
+        }
+
+        //sets the image array at the slice index tro the data produced for current Bytes
+        imageArray[sIndex] = new Unit8Array(currentBytes);
+        alert("Convert complete");
+      }
+      return new Blob(imageArray, {type: contentType});
+    },
+
 };
 app.initialize();
