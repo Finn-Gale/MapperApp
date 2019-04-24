@@ -85,19 +85,26 @@ var app = {
     $('#cameraButton').on('click', function() {
     app.CapturePhoto();
     });
-    
-  },
 
-  processData: function(tData)
-  {
-    for(var i=0; i < tData.length; i++)
-    {
+    //sets up the login and register buttons
+    $('#loginButton').on('click', function(){
+      //grabs the values for the username and password
+      var uName = $('#Uemail').val();
+      var uPass = $('#UPassword').val();
 
-    //  $('#dataList').append("<li><image style='display:none;width:200px;height:250px;' src='" +tData[i].Picture+"' alt='Image Missing'></li>");
+      //calls the login funciton
+      app.userLogin(uName,uPass);
+    });
 
-      $('#dataList').append("<li>"+"<image style='display:block;width:200px;height:250px;' src='"+tData[i].Picture+"'</li>");
-      $('#dataList').append("<li>"+tData[i].Text+"</li>");
-    }
+    $('#registerButton').on('click', function(){
+      //grabs the values for the username and password
+      var uName = $('#Uemail').val();
+      var uPass = $('#UPassword').val();
+
+      //calls the register funciton
+      app.userRegister(uName,uPass);
+    });
+
   },
 
   onPhotoPageInit: function()
@@ -142,6 +149,83 @@ var app = {
     console.log('Received Event: ' + id);
   },
 
+  //this funciton is used to register users with the backendless api
+  userRegister: function(username, userpassword)
+  {
+    //this checks the values provided by the users
+    if(username =="")
+    {
+      alert('Please enter a Email adress');
+    }
+    else if(userpassword == "")
+    {
+      alert('Please enter a Password');
+    }
+    else
+    {
+      //if both values are suatable the system attempts to register the userRegister
+      //a user object is created
+      var newUser = new Backendless.User();
+      //values for email and password are created
+      newUser.email = username;
+      newUser.password = userpassword;
+
+      //A backendless register attempt is now called
+      Backendless.UserService.register(newUser).then(app.registerSuccess).catch(function(){
+        //clears the password box
+        $('#UPassword').val("");
+        app.onFail();
+      });
+    }
+  },
+
+  //this method is called when
+  registerSuccess: function(regedUser)
+  {
+    alert('Register sucesfful');
+    app.userLogin(regedUser.email, regedUser.password);
+  },
+  //This function is used to log the users into the backendless API
+  userLogin: function(username, userpassword)
+  {
+    //this checks the values provided by the users
+    if(username =="")
+    {
+      alert('Please enter a Email adress');
+    }
+    else if(userpassword == "")
+    {
+      alert('Please enter a Password');
+    }
+    else
+    {
+      //if both values are valid then a login is attempted
+      //sedns in a username, a user password and states that the user should remain logged in
+      Backendless.UserService.login(username, userpassword, true).then(app.loginSuccess).catch(function(){
+        //clears the password box
+        $('#UPassword').val("");
+        app.onFail();
+      });
+    }
+  },
+//this function occurs when the user has sucesfully logged on
+  loginSuccess: function(loggedUser)
+  {
+    alert('login successfull');
+
+    //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
+    thisUser = loggedUser;
+  },
+  //this fills the data view with the content found in the backendless pins table
+  processData: function(tData)
+  {
+    for(var i=0; i < tData.length; i++)
+    {
+
+      $('#dataList').append("<li>"+"<image style='display:block;width:200px;height:250px;' src='"+tData[i].Picture+"'</li>");
+      $('#dataList').append("<li>"+tData[i].Text+"</li>");
+    }
+  },
   // Camera code
   //for the camera to work it need sto have a function for
   //capturing photos
