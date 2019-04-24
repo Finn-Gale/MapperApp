@@ -129,8 +129,8 @@ var app = {
     //THis clears the dataList
     $('#dataList').empty();
 
-    //this calls the backendless table call
-    Backendless.Data.of("Pins").find().then(app.processData).catch(app.onFail);
+    app.processData(app.retriveData());
+
 
     $('#dataList').listview('refresh');
   },
@@ -169,6 +169,7 @@ var app = {
       //values for email and password are created
       newUser.email = username;
       newUser.password = userpassword;
+      newUser.userKey = app.fileNamer();
 
       //A backendless register attempt is now called
       Backendless.UserService.register(newUser).then(app.registerSuccess).catch(function(){
@@ -216,6 +217,33 @@ var app = {
     //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
     thisUser = loggedUser;
   },
+
+  //This funciton is used to retrive data from the backendless data structure
+  retriveData: function()
+  {
+    if(thisUser != null)
+    {
+      //this creates a search claus that will esnure that only tyhe pins created by the user will be returned to them
+      var searchClaus = "userKey = '"+thisUser.userKey+"'";
+      var querryBuild = new Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
+
+      //the app then retrives the data from Backendless
+      var pinData = Backendless.Data.of("Pins").find(searchClaus).then().catch(app.onFail);
+
+      //this returns the values to caller
+      return pinData;
+    }
+    else
+    {
+      //if there is no current user then an alert is displayed and the user is redirected tot he home page
+      alert('Please log in or register')
+      $.mobile.navigate("#HomePage");
+      return null;
+    }
+
+
+  },
+
   //this fills the data view with the content found in the backendless pins table
   processData: function(tData)
   {
@@ -268,7 +296,7 @@ var app = {
     alert('Saved new pin');
   },
 
-  //Backendless note upload
+  //Backendless note upload //FOR TESTING PURPOSES
   onNote: function()
   {
     //Grabs the value of the note input box
@@ -303,6 +331,7 @@ var app = {
       var newPin = {};
       newPin.Picture =result.fileURL;
       newPin.Text =noteVal;
+      newPin.User = thisUser.userKey;
 
       //calls the storage to the Pins table
       Backendless.Data.of("Pins").save(newPin).then(app.onNoteSuccess).catch(app.onFail);
@@ -333,6 +362,7 @@ var app = {
       //this gives the new file a random name
       newPhoto.name = app.fileNamer();
 
+      newPhoto.name += ".jpeg";
       //lets user know the upload is takign place
       alert('attempt upload, Please be patient as the image uploads')
       try
@@ -406,7 +436,7 @@ var app = {
       randAscii = Math.floor((Math.random()*25)+97);
       fName += String.fromCharCode(randAscii);
     }
-    fName += ".jpeg";
+
     return fName;
   },
 };
