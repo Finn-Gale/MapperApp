@@ -136,7 +136,7 @@ var app = {
   },
 
 
-  // Update DOM on a Received Event
+  // Update DOM on a Received Event This function was created by cordova and not by me as where its calls
   receivedEvent: function(id)
   {
     var parentElement = document.getElementById(id);
@@ -216,7 +216,6 @@ var app = {
 
     //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
     thisUser = loggedUser;
-    alert('this user set');
     //this creates a variable to hold the users data from the backend
     var userData = app.retriveData();
 
@@ -240,14 +239,12 @@ var app = {
   //This funciton is used to retrive data from the backendless data structure
   retriveData: function()
   {
-    alert('retrive data attempt');
+
     if(thisUser != null)
     {
       //this creates a search claus that will esnure that only tyhe pins created by the user will be returned to them
       var searchClaus = "User = '"+thisUser.userKey+"'";
       var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
-
-
 
       //the app then retrives the data from Backendless
       var pinData = Backendless.Data.of("Pins").findSync(querryBuild);
@@ -262,15 +259,8 @@ var app = {
       $.mobile.navigate("#HomePage");
       return null;
     }
-
-
   },
 
-
-  saveResults: function(tData)
-  {
-
-  },
   //this fills the data view with the content found in the backendless pins table
   processData: function(tData)
   {
@@ -278,7 +268,8 @@ var app = {
     {
 
       $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'</li>");
-      $('#dataList').append("<li>"+tData[i].Text+"</li>");
+      $('#dataList').append("<li data-inline='true' >"+tData[i].Text+" <input data-role='button' type='button' id= 'button"+i+"' data-inline='true' value= 'Delete'></li>");
+
     }
   },
   // Camera code
@@ -391,7 +382,7 @@ var app = {
 
       newPhoto.name += ".jpeg";
       //lets user know the upload is takign place
-      alert('attempt upload, Please be patient as the image uploads')
+      alert('Attempt upload. Please be patient as the image uploads')
       try
       {
         //attempt the upload to the pinImages file
