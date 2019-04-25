@@ -149,7 +149,7 @@ var app = {
     console.log('Received Event: ' + id);
   },
 
-  //this funciton is used to register users with the backendless api
+  //this funciton is used to register users with the backendless
   userRegister: function(username, userpassword)
   {
     //this checks the values provided by the users
@@ -186,7 +186,7 @@ var app = {
     alert('Register sucesfful');
     app.userLogin(regedUser.email, regedUser.password);
   },
-  //This function is used to log the users into the backendless API
+  //This function is used to log the users into the backendless
   userLogin: function(username, userpassword)
   {
     //this checks the values provided by the users
@@ -216,19 +216,41 @@ var app = {
 
     //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
     thisUser = loggedUser;
+    alert('this user set');
+    //this creates a variable to hold the users data from the backend
+    var userData = app.retriveData();
+
+    alert(userData.length);
+    //this checks the size of their data folder, if it is empty the user is directed to take a photo, if not then they are led to the data view page
+    //this therfore reacts to user data to personlize the user experince to the user
+
+    if(userData.length > 0)
+    {
+      //navigates to the data view page
+        $.mobile.navigate("#DataPage");
+    }
+    else
+    {
+      alert('attempting photo');
+      //calls the capture photo method
+      app.CapturePhoto();
+    }
   },
 
   //This funciton is used to retrive data from the backendless data structure
   retriveData: function()
   {
+    alert('retrive data attempt');
     if(thisUser != null)
     {
       //this creates a search claus that will esnure that only tyhe pins created by the user will be returned to them
-      var searchClaus = "userKey = '"+thisUser.userKey+"'";
-      var querryBuild = new Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
+      var searchClaus = "User = '"+thisUser.userKey+"'";
+      var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
+
+
 
       //the app then retrives the data from Backendless
-      var pinData = Backendless.Data.of("Pins").find(searchClaus).then().catch(app.onFail);
+      var pinData = Backendless.Data.of("Pins").findSync(querryBuild);
 
       //this returns the values to caller
       return pinData;
@@ -244,13 +266,18 @@ var app = {
 
   },
 
+
+  saveResults: function(tData)
+  {
+
+  },
   //this fills the data view with the content found in the backendless pins table
   processData: function(tData)
   {
     for(var i=0; i < tData.length; i++)
     {
 
-      $('#dataList').append("<li>"+"<image style='display:block;width:200px;height:250px;' src='"+tData[i].Picture+"'</li>");
+      $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'</li>");
       $('#dataList').append("<li>"+tData[i].Text+"</li>");
     }
   },

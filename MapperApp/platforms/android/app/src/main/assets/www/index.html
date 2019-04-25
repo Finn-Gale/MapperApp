@@ -64,6 +64,17 @@
                     <p class="event received">Device is Ready</p>
                 </div><!--/CordovaStartUp-->
 
+                <!--login and register, inline  -->
+                <div id="userLogin">
+                  <!--Inputs for email and password  -->
+                  <input type="text" id="Uemail" value="" placeholder="Email">
+                  <input type="password" id="UPassword"  value="" placeholder="Password">
+
+                  <!--Buttons for login or register  -->
+                  <input data-role="button" type="button" id="loginButton"  data-inline="true" value="Login">
+                  <input data-role="button" type="button" id="registerButton"  data-inline="true" value="Register">
+                </div><!--/userLogin -->
+
               </div><!--/Content-->
 
               <!--Persistant Footer -->
@@ -77,7 +88,6 @@
                 </div><!--/Navbar-->
               </div><!--/Footer-->
             </div> <!--/HomePage-->
-
 
               <!--This page is the photo page and will be where he users pictures are viewed after being taken  -->
               <div data-role="page" id="PhotoPage">
@@ -128,15 +138,17 @@
                   </ul><!-- /dataList  -->
                 </div><!--/Conent -->
 
-                <!-- This denotes the persistant footer of the data page -->
-                <div data-role="navbar">
+                <!--Persistant Footer -->
+                <div data-role="footer" data-id="mainFooter" data-position="fixed">
+                  <!-- This denotes the persistant footer of the data page -->
+                  <div data-role="navbar">
                     <ul>
                       <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
                       <li><button id="cameraButton_d" data-icon="camera" data-transition="slidefade"></button></li><!--Link to camera -->
                       <li><a href="#DataPage" data-icon="grid" data-transition="slidefade"></a></li><!--Link to DataPage -->
                     </ul>
-                </div><!--/Navbar-->
-              </div><!--/Footer-->
+                  </div><!--/Navbar-->
+                </div><!--/Footer-->
               </div><!--/DataPage -->
 
             </div><!--/app-->

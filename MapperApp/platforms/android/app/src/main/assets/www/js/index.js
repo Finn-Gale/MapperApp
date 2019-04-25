@@ -21,6 +21,7 @@
 Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
 
 var destinationType;
+var thisUser;
 var app = {
 
   // Instance variables, (or somthing close to that)
@@ -38,8 +39,8 @@ var app = {
     document.addEventListener('resume',this.onResume,false);
 
     //this checks if the home Page has been loaded
-    $(document).on("pagecreate","#HomePage", this.onHomePageInit);
-    $(document).on("pagecreate","#PhotoPage", this.onPhotoPageInit);
+    $(document).on("pageshow","#HomePage", this.onHomePageInit);
+    $(document).on("pageshow","#PhotoPage", this.onPhotoPageInit);
     $(document).on("pageshow","#DataPage", this.onDataPageInit);
 
     //this is goign to be a check when document is ready
@@ -62,14 +63,14 @@ var app = {
     //this is called hear because i ned to be sure that there is a device that has a camera
     destinationType=navigator.camera.DestinationType;
 
-
+    //this sets teh user to nothing
+    thisUser = "";
   },
 
   //This handles the pause event,
   onPause: function()
   {
-    //This calls the recived event method and sends the event through
-    this.receivedEvent('pause');
+
   },
 
   onResume: function()
@@ -80,28 +81,30 @@ var app = {
 
   onHomePageInit: function()
   {
-
+    //Sets up the camera button
     $('#cameraButton').on('click', function() {
     app.CapturePhoto();
     });
 
-    $('#SaveFile').on('click', function(){
-    app.UploadFile();
+    //sets up the login and register buttons
+    $('#loginButton').on('click', function(){
+      //grabs the values for the username and password
+      var uName = $('#Uemail').val();
+      var uPass = $('#UPassword').val();
+
+      //calls the login funciton
+      app.userLogin(uName,uPass);
     });
 
+    $('#registerButton').on('click', function(){
+      //grabs the values for the username and password
+      var uName = $('#Uemail').val();
+      var uPass = $('#UPassword').val();
 
-  },
+      //calls the register funciton
+      app.userRegister(uName,uPass);
+    });
 
-  processData: function(tData)
-  {
-    for(var i=0; i < tData.length; i++)
-    {
-
-    //  $('#dataList').append("<li><image style='display:none;width:200px;height:250px;' src='" +tData[i].Picture+"' alt='Image Missing'></li>");
-
-      $('#dataList').append("<li>"+"<image style='display:block;width:200px;height:250px;' src='"+tData[i].Picture+"'</li>");
-      $('#dataList').append("<li>"+tData[i].Text+"</li>");
-    }
   },
 
   onPhotoPageInit: function()
@@ -126,8 +129,8 @@ var app = {
     //THis clears the dataList
     $('#dataList').empty();
 
-    //this calls the backendless table call
-    Backendless.Data.of("Pins").find().then(app.processData).catch(app.onFail);
+    app.processData(app.retriveData());
+
 
     $('#dataList').listview('refresh');
   },
@@ -146,6 +149,138 @@ var app = {
     console.log('Received Event: ' + id);
   },
 
+  //this funciton is used to register users with the backendless
+  userRegister: function(username, userpassword)
+  {
+    //this checks the values provided by the users
+    if(username =="")
+    {
+      alert('Please enter a Email adress');
+    }
+    else if(userpassword == "")
+    {
+      alert('Please enter a Password');
+    }
+    else
+    {
+      //if both values are suatable the system attempts to register the userRegister
+      //a user object is created
+      var newUser = new Backendless.User();
+      //values for email and password are created
+      newUser.email = username;
+      newUser.password = userpassword;
+      newUser.userKey = app.fileNamer();
+
+      //A backendless register attempt is now called
+      Backendless.UserService.register(newUser).then(app.registerSuccess).catch(function(){
+        //clears the password box
+        $('#UPassword').val("");
+        app.onFail();
+      });
+    }
+  },
+
+  //this method is called when
+  registerSuccess: function(regedUser)
+  {
+    alert('Register sucesfful');
+    app.userLogin(regedUser.email, regedUser.password);
+  },
+  //This function is used to log the users into the backendless
+  userLogin: function(username, userpassword)
+  {
+    //this checks the values provided by the users
+    if(username =="")
+    {
+      alert('Please enter a Email adress');
+    }
+    else if(userpassword == "")
+    {
+      alert('Please enter a Password');
+    }
+    else
+    {
+      //if both values are valid then a login is attempted
+      //sedns in a username, a user password and states that the user should remain logged in
+      Backendless.UserService.login(username, userpassword, true).then(app.loginSuccess).catch(function(){
+        //clears the password box
+        $('#UPassword').val("");
+        app.onFail();
+      });
+    }
+  },
+//this function occurs when the user has sucesfully logged on
+  loginSuccess: function(loggedUser)
+  {
+    alert('login successfull');
+
+    //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
+    thisUser = loggedUser;
+    alert('this user set');
+    //this creates a variable to hold the users data from the backend
+    var userData = app.retriveData();
+
+    alert(userData.length);
+    //this checks the size of their data folder, if it is empty the user is directed to take a photo, if not then they are led to the data view page
+    //this therfore reacts to user data to personlize the user experince to the user
+
+    if(userData.length > 0)
+    {
+      //navigates to the data view page
+        $.mobile.navigate("#DataPage");
+    }
+    else
+    {
+      alert('attempting photo');
+      //calls the capture photo method
+      app.CapturePhoto();
+    }
+  },
+
+  //This funciton is used to retrive data from the backendless data structure
+  retriveData: function()
+  {
+    alert('retrive data attempt');
+    if(thisUser != null)
+    {
+      //this creates a search claus that will esnure that only tyhe pins created by the user will be returned to them
+      var searchClaus = "User = '"+thisUser.userKey+"'";
+      var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
+
+
+
+      //the app then retrives the data from Backendless
+      var pinData = Backendless.Data.of("Pins").findSync(querryBuild);
+
+      //this returns the values to caller
+      return pinData;
+    }
+    else
+    {
+      //if there is no current user then an alert is displayed and the user is redirected tot he home page
+      alert('Please log in or register')
+      $.mobile.navigate("#HomePage");
+      return null;
+    }
+
+
+  },
+
+
+  saveResults: function(tData)
+  {
+
+  },
+  //this fills the data view with the content found in the backendless pins table
+  processData: function(tData)
+  {
+    for(var i=0; i < tData.length; i++)
+    {
+
+      $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'</li>");
+      $('#dataList').append("<li>"+tData[i].Text+"</li>");
+    }
+  },
   // Camera code
   //for the camera to work it need sto have a function for
   //capturing photos
@@ -188,7 +323,7 @@ var app = {
     alert('Saved new pin');
   },
 
-  //Backendless note upload
+  //Backendless note upload //FOR TESTING PURPOSES
   onNote: function()
   {
     //Grabs the value of the note input box
@@ -223,6 +358,7 @@ var app = {
       var newPin = {};
       newPin.Picture =result.fileURL;
       newPin.Text =noteVal;
+      newPin.User = thisUser.userKey;
 
       //calls the storage to the Pins table
       Backendless.Data.of("Pins").save(newPin).then(app.onNoteSuccess).catch(app.onFail);
@@ -253,6 +389,7 @@ var app = {
       //this gives the new file a random name
       newPhoto.name = app.fileNamer();
 
+      newPhoto.name += ".jpeg";
       //lets user know the upload is takign place
       alert('attempt upload, Please be patient as the image uploads')
       try
@@ -326,7 +463,7 @@ var app = {
       randAscii = Math.floor((Math.random()*25)+97);
       fName += String.fromCharCode(randAscii);
     }
-    fName += ".jpeg";
+
     return fName;
   },
 };

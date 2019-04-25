@@ -15,7 +15,7 @@ ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\andr
 INJECTED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:2:1-18:12
 INJECTED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:2:1-18:12
 INJECTED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:2:1-18:12
-MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:17:1-27:12
 MERGED from [:CordovaLib] C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:1-27:12
 INJECTED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:2:1-18:12
 INJECTED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:2:1-18:12
@@ -56,8 +56,8 @@ ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\andr
 		ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:4:22-64
 application
 ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:5:5-15:19
-MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:25:5-20
 	android:supportsRtl
 		ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:5:114-140
 	android:label
@@ -94,12 +94,12 @@ ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\andr
 		ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:9:27-74
 uses-sdk
 ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:16:5-74
-MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:21:5-23:54
 MERGED from [:CordovaLib] C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
 MERGED from [:CordovaLib] C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\CordovaLib\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:5-44
 	tools:overrideLibrary
-		ADDED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\23baa3db8a6ba7c2d78c19a22642d489\AndroidManifest.xml:23:9-51
+		ADDED from [com.android.support:support-v4:24.1.1] C:\Users\GALF1_16\.gradle\caches\transforms-1\files-1.1\support-v4-24.1.1.aar\3e3d4fc14d0b6893897cbd7c71c6cf37\AndroidManifest.xml:23:9-51
 	android:targetSdkVersion
 		ADDED from C:\Users\GALF1_16\Documents\GitHub\MapperApp\MapperApp\platforms\android\app\src\main\AndroidManifest.xml:16:42-71
 	android:minSdkVersion
