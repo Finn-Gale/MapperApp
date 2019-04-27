@@ -107,7 +107,7 @@
                     <!--This Input button is used to upload the image and note to backendless-->
                     <input type="button" value="Save Data" id="SavePin" disabled>
 
-                    <input id="photoData" value="Jam">
+                    <input id="photoData" value="">
 
                 </div><!--/Content-->
 
@@ -138,9 +138,10 @@
                   </ul><!-- /dataList  -->
                 </div><!--/Conent -->
 
-                <!--Persistant Footer -->
+                <!-- This denotes the persistant footer of the data page -->
                 <div data-role="footer" data-id="mainFooter" data-position="fixed">
-                  <!-- This denotes the persistant footer of the data page -->
+
+
                   <div data-role="navbar">
                     <ul>
                       <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
@@ -151,6 +152,38 @@
                 </div><!--/Footer-->
               </div><!--/DataPage -->
 
+              <!--This page is for viewing, and editing individual images that have already been saved-->
+              <div data-role="page" id="EditPage">
+                <!--This denotes the header of the edit page  -->
+                <div data-role="header">
+                  <h1>Edit Page</h1>
+                </div><!--/header -->
+
+                <!--This region denotes the ocontent of the edit page  -->
+                <div data-role ="content">
+                  <!--The content of this page will be an image which takes up the majority of the page, a test input to change the pin and a delete button to delete the pin-->
+                    <image style="display:;width:400px;height:500px;" id="selectedImage" src="" alt="Image Missing"/>
+
+                    <input type="text" name="selectedNote" id="selectedNote" value="" placeholder=""/>
+
+                    <!--This Input button is used to upload the image and note to backendless once the user has made any changes-->
+                    <input type="button" value="Save changes" id="applyChange" data-inline="true" >
+                    <!--This button is used to delete the selected image  -->
+                    <input type="button" value="Delete" id="deletePin" data-inline="true" >
+                </div><!--/Conent -->
+
+                <!-- This denotes the persistant footer of the edit page -->
+                <div data-role="footer" data-id="mainFooter" data-position="fixed">
+
+                  <div data-role="navbar">
+                    <ul>
+                      <li><a href="#HomePage" data-icon="home" data-transition="slidefade"></a></li><!--Link to Homepage -->
+                      <li><button id="cameraButton_e" data-icon="camera" data-transition="slidefade"></button></li><!--Link to camera -->
+                      <li><a href="#DataPage" data-icon="grid" data-transition="slidefade"></a></li><!--Link to DataPage -->
+                    </ul>
+                  </div><!--/Navbar-->
+                </div><!--/Footer-->
+              </div> <!--/EditPage -->
             </div><!--/app-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

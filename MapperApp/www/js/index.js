@@ -244,7 +244,6 @@ var app = {
     //this therfore reacts to user data to personlize the user experince to the user
     if(userData.length > 0)
     {
-      alert('trying to navigate to the data page');
       //navigates to the data view page
         $.mobile.navigate("#DataPage");
     }
@@ -318,17 +317,28 @@ var app = {
         //this finds the elemnt to hold the image and sets the image
         $('#selectedImage').attr('src',imagePin.Picture);
 
-        //this finds the elemnt for the text
+        //this finds the elemnt for the text and sets thepin text
         $('#selectedNote').attr('value',imagePin.Text);
 
+        //this adds event listeners for the save cahnges and delete buttons
         $('#applyChange').on('click', function() {
-        app.CapturePhoto();
+        app.updatePin(imagePin,  $('#selectedNote').attr('value'));
         });
         $('#deletePin').on('click', function() {
-        app.CapturePhoto();
+        app.deletePin(imagePin);
         });
 
        });
+    },
+
+//the purpose of this funciton is to update pin data
+    updatePin: function(overPin, newText)
+    {
+      //sets the pin text to the inputed text
+      overPin.Text = newText;
+        //the same call is used to save as to update as they have the same id so the data is updated
+      //calls the storage to the Pins table
+      Backendless.Data.of("Pins").save(overPin).then(app.onNoteSuccess).catch(app.BackError);
     },
   // Camera code
   //for the camera to work it need sto have a function for
@@ -370,7 +380,7 @@ var app = {
 
   onNoteSuccess: function(savedNote)
   {
-    alert('Saved new pin');
+    alert('Saved Pin Data');
   },
 
   //Backendless note upload //FOR TESTING PURPOSES
@@ -514,18 +524,23 @@ var app = {
 //the function of this method is to delete pins found in the users library of pins
   deletePin: function(pinVal)
   {
-  //create a search querry
-  var querryString = "Picture = '"+pinVal+"'";
-  var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(querryString);
+    //this retrives the objectID
 
-  //the app then retrives the data from Backendless
-Backendless.Data.of("Pins").find(querryBuild).then(function(foundPin){
-    var pinData = foundPin;
-    alert('attemtping to delete a file');
-      //this calles the file remove to remove the file from the file server
-      Backendless.Files.remove(pinVal).then().catch(app.onFail);
-  }).catch(app.BackError);
+    //var imgPath = pinVal.Picture;
 
+
+    //this calls for the image file to be removed form the database
+    // Backendless.Files.remove(imgPath).then(function() {
+    //
+    // }).catch(app.BackError);
+
+    //this calls the remove method of backendless to remove the pin
+    Backendless.Data.of("Pins").remove(pinVal).then(function() {
+      alert('Pin sucesfully deleted');
+
+      //navigate to the data page  //navigaet to #Photopage
+        $.mobile.navigate("#DataPage");
+    }).catch(app.BackError);
   },
 
    BackError: function(err)
