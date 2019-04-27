@@ -20,12 +20,16 @@
 //This sets up the link between this app and the Backendless service
 Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
 
+// Instance variables, (or somthing close to that)
+//var destinationType i used by the camera in order to take photos
+
 var destinationType;
+
+//this usert is used to identify the user of the application
 var thisUser;
 var app = {
 
-  // Instance variables, (or somthing close to that)
-  //var destinationType i used by the camera in order to take photos
+
 
   // Application Constructor
   //this is where i would add any event Listeners such as page load, pause, resume
@@ -38,18 +42,16 @@ var app = {
 
     document.addEventListener('resume',this.onResume,false);
 
-    //this checks if the home Page has been loaded
+    //this checks if the Pages have been loaded
     $(document).on("pageshow","#HomePage", this.onHomePageInit);
     $(document).on("pageshow","#PhotoPage", this.onPhotoPageInit);
     $(document).on("pageshow","#DataPage", this.onDataPageInit);
+    $(document).on("pageshow","#EditPage", this.onDataPageInit);
 
     //this is goign to be a check when document is ready
     $(document).ready(function() { console.log('Ready');});
 
   },
-
-
-
   // deviceready Event Handler
   //
   // Bind any cordova events here. Common events are:
@@ -60,11 +62,10 @@ var app = {
     this.receivedEvent('deviceready');
 
     //This sets up the camera
-    //this is called hear because i ned to be sure that there is a device that has a camera
+    //this is called hear because i need to be sure that there is a device that has a camera
     destinationType=navigator.camera.DestinationType;
 
-    //this sets teh user to nothing
-    thisUser = "";
+    Backendless.enablePromises();
   },
 
   //This handles the pause event,
@@ -75,7 +76,11 @@ var app = {
 
   onResume: function()
   {
-
+    //this checks if the user has a login value, if not they are redirected to the home page so they can log in or register
+    if(thisUser == null)
+    {
+        $.mobile.navigate("#HomePage");
+    }
   },
 
 
@@ -134,10 +139,18 @@ var app = {
     //THis clears the dataList
     $('#dataList').empty();
 
-    app.processData(app.retriveData());
+    app.retriveData(app.processData);
 
 
     $('#dataList').listview('refresh');
+  },
+
+  editPageinit: function()
+  {
+    //sets up the camera button
+    $('#cameraButton_e').on('click', function() {
+    app.CapturePhoto();
+    });
   },
   // Update DOM on a Received Event This function was created by cordova and not by me as where its calls
   receivedEvent: function(id)
@@ -219,14 +232,19 @@ var app = {
 
     //this sets the variable for this user to be the instance of the Backendless user object provided by the loggin attempt
     thisUser = loggedUser;
-    //this creates a variable to hold the users data from the backend
-    var userData = app.retriveData();
+    //this calls the retrive data funciton and passes the loginDataCheck as a parameter to be called back asynchrounasly (cant spell)
+    app.retriveData(app.loginDataCheck);
 
+
+  },
+
+  loginDataCheck: function(userData)
+  {
     //this checks the size of their data folder, if it is empty the user is directed to take a photo, if not then they are led to the data view page
     //this therfore reacts to user data to personlize the user experince to the user
-
     if(userData.length > 0)
     {
+      alert('trying to navigate to the data page');
       //navigates to the data view page
         $.mobile.navigate("#DataPage");
     }
@@ -239,9 +257,8 @@ var app = {
   },
 
   //This funciton is used to retrive data from the backendless data structure
-  retriveData: function()
+  retriveData: function(callback)
   {
-
     if(thisUser != null)
     {
       //this creates a search claus that will esnure that only tyhe pins created by the user will be returned to them
@@ -249,10 +266,12 @@ var app = {
       var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(searchClaus);
 
       //the app then retrives the data from Backendless
-      var pinData = Backendless.Data.of("Pins").findSync(querryBuild);
+      var pinData;
+      Backendless.Data.of("Pins").find(querryBuild).then(function(searchPin){
+        pinData = searchPin;
 
-      //this returns the values to caller
-      return pinData;
+        callback(pinData);
+      }).catch(app.BackError);
     }
     else
     {
@@ -268,19 +287,48 @@ var app = {
   {
     for(var i=0; i < tData.length; i++)
     {
+      //this creates list items with an image and a n onclick funciton that sends istelf to the imageSelect fucntion
+      $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'onclick='app.imageSelect(this)'</li>");
 
-      $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'</li>");
-      var buttonID =("button" +i);
-      $('#dataList').append("<li data-inline='true' >"+tData[i].Text+" <input data-role='button' type='button' id= '"+buttonID+"' data-inline='true' value= 'Delete'></li>");
-
-      var picString =tData[i].Picture;
-      document.getElementById(buttonID).addEventListener("click", function(){
-        app.deletePin(picString)
-        app.dataPageLoader();
-          //location.reload();
-      });
-
+    //this creaets a list item that holds the pin text created by the user
+      $('#dataList').append("<li data-inline='true' >"+tData[i].Text+"</li>");
     }
+    },
+
+    //this funciton takes in a image elemtn and grabs its src and opens the edit page using the selected image
+  imageSelect: function(pImage)
+  {
+       var imageSrc = $(pImage).attr('src');
+
+      //this navigates to the edit page
+      $.mobile.navigate("#EditPage");
+
+      //this retrives the pin from backendless where the Pin picture is the same as as the selected image
+      //cerates a querry string
+      var querryString = "Picture = '"+imageSrc+"'";
+      //create a querry builder
+      var querryBuild = Backendless.DataQueryBuilder.create().setWhereClause(querryString);
+
+      //retrives the pin
+       Backendless.Data.of("Pins").find(querryBuild).then(function(foundPin){
+         var selectPin = foundPin;
+        //sets th image pin to the first value (the querry always returns an array but there is only one value)
+        var imagePin = selectPin[0];
+
+        //this finds the elemnt to hold the image and sets the image
+        $('#selectedImage').attr('src',imagePin.Picture);
+
+        //this finds the elemnt for the text
+        $('#selectedNote').attr('value',imagePin.Text);
+
+        $('#applyChange').on('click', function() {
+        app.CapturePhoto();
+        });
+        $('#deletePin').on('click', function() {
+        app.CapturePhoto();
+        });
+
+       });
     },
   // Camera code
   //for the camera to work it need sto have a function for
@@ -313,6 +361,7 @@ var app = {
     var inputButton = document.getElementById('SavePin');
     inputButton.disabled = false;
   },
+
   //unsucsesfull attempt
   onFail: function(message)
   {
@@ -353,8 +402,6 @@ var app = {
     alert( "File successfully uploaded. Path to download: " + result.fileURL );
     var noteVal = $('#note').val();
 
-    try
-    {
       //creates the new pin to be stored and sets its values
       var newPin = {};
       newPin.Picture =result.fileURL;
@@ -362,12 +409,8 @@ var app = {
       newPin.User = thisUser.userKey;
 
       //calls the storage to the Pins table
-      Backendless.Data.of("Pins").save(newPin).then(app.onNoteSuccess).catch(app.onFail);
-    }
-      catch(error)
-    {
-      alert(error);
-    }
+      Backendless.Data.of("Pins").save(newPin).then(app.onNoteSuccess).catch(app.BackError);
+
   },
 
 
@@ -396,7 +439,7 @@ var app = {
       try
       {
         //attempt the upload to the pinImages file
-        Backendless.Files.upload( newPhoto, "PinImages").then(app.UploadResult).catch(app.onFail);
+        Backendless.Files.upload( newPhoto, "PinImages").then(app.UploadResult).catch(app.BackError);
       }
       catch(error)
       {
@@ -476,19 +519,19 @@ var app = {
   var querryBuild =  Backendless.DataQueryBuilder.create().setWhereClause(querryString);
 
   //the app then retrives the data from Backendless
-  var pinData = Backendless.Data.of("Pins").findSync(querryBuild);
+Backendless.Data.of("Pins").find(querryBuild).then(function(foundPin){
+    var pinData = foundPin;
+    alert('attemtping to delete a file');
+      //this calles the file remove to remove the file from the file server
+      Backendless.Files.remove(pinVal).then().catch(app.onFail);
+  }).catch(app.BackError);
 
-
-  //call the remove from the backendless service
-
-  alert('attemtping to delete a pin');
-  Backendless.Persistence.of("Pins").remove(pinData[0]).then().catch(app.onFail);
-
-alert('attemtping to delete a file');
-  //this calles the file remove to remove the file from the file server
-  Backendless.Files.remove(pinVal).then().catch(app.onFail);
   },
 
-
+   BackError: function(err)
+   {
+      console.log("error message - " + err.message);
+      console.log("error code - " + err.statusCode);
+  },
 };
 app.initialize();
