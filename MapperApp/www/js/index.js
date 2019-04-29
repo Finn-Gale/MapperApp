@@ -320,6 +320,8 @@ var app = {
         //this finds the elemnt for the text and sets thepin text
         $('#selectedNote').attr('value',imagePin.Text);
 
+        $('#applyChange').off('click');
+          $('#deletePin').off('click');
         //this adds event listeners for the save cahnges and delete buttons
         $('#applyChange').on('click', function() {
         app.updatePin(imagePin,  $('#selectedNote').attr('value'));
