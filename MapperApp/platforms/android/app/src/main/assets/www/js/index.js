@@ -46,7 +46,7 @@ var app = {
     $(document).on("pageshow","#HomePage", this.onHomePageInit);
     $(document).on("pageshow","#PhotoPage", this.onPhotoPageInit);
     $(document).on("pageshow","#DataPage", this.onDataPageInit);
-    $(document).on("pageshow","#EditPage", this.onDataPageInit);
+    $(document).on("pageshow","#EditPage", this.onEditPageinit);
 
     //this is goign to be a check when document is ready
     $(document).ready(function() { console.log('Ready');});
@@ -145,7 +145,7 @@ var app = {
     $('#dataList').listview('refresh');
   },
 
-  editPageinit: function()
+  onEditPageinit: function()
   {
     //sets up the camera button
     $('#cameraButton_e').on('click', function() {
@@ -299,9 +299,6 @@ var app = {
   {
        var imageSrc = $(pImage).attr('src');
 
-      //this navigates to the edit page
-      $.mobile.navigate("#EditPage");
-
       //this retrives the pin from backendless where the Pin picture is the same as as the selected image
       //cerates a querry string
       var querryString = "Picture = '"+imageSrc+"'";
@@ -313,6 +310,9 @@ var app = {
          var selectPin = foundPin;
         //sets th image pin to the first value (the querry always returns an array but there is only one value)
         var imagePin = selectPin[0];
+
+        //this navigates to the edit page
+        $.mobile.navigate("#EditPage");
 
         //this finds the elemnt to hold the image and sets the image
         $('#selectedImage').attr('src',imagePin.Picture);
@@ -328,7 +328,7 @@ var app = {
         app.deletePin(imagePin);
         });
 
-       });
+      }).catch(app.BackError);
     },
 
 //the purpose of this funciton is to update pin data
@@ -380,7 +380,11 @@ var app = {
 
   onNoteSuccess: function(savedNote)
   {
+
     alert('Saved Pin Data');
+    //navigaet to #Datapage
+    $.mobile.navigate("#DataPage");
+
   },
 
   //Backendless note upload //FOR TESTING PURPOSES
