@@ -536,7 +536,7 @@ var app = {
   {
 
     //this calls for the image file to be removed form the database
-     Backendless.Files.remove(imgPath).then(function() {
+     Backendless.Files.remove(pinVal.Picture).then(function() {
 
        //this calls the remove method of backendless to remove the pin
        Backendless.Data.of("Pins").remove(pinVal).then(function() {

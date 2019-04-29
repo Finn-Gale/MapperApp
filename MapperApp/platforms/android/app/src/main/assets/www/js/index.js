@@ -221,7 +221,7 @@ var app = {
       Backendless.UserService.login(username, userpassword, true).then(app.loginSuccess).catch(function(){
         //clears the password box
         $('#UPassword').val("");
-        app.onFail();
+        app.BackError();
       });
     }
   },
@@ -287,6 +287,10 @@ var app = {
     for(var i=0; i < tData.length; i++)
     {
       //this creates list items with an image and a n onclick funciton that sends istelf to the imageSelect fucntion
+      //an on click event is used here as it is vital that each image when called sends itself through to th image select fucntion,
+      //this was untenable with a jquerry or javascript call because this item is created in a for loop
+      //If done with a dynamic call often the last element to be added would be passed whenever the imageselect method was called
+
       $('#dataList').append("<li>"+"<image style='display:block;width:300px;height:350px;' src='"+tData[i].Picture+"'onclick='app.imageSelect(this)'</li>");
 
     //this creaets a list item that holds the pin text created by the user
@@ -320,6 +324,8 @@ var app = {
         //this finds the elemnt for the text and sets thepin text
         $('#selectedNote').attr('value',imagePin.Text);
 
+        $('#applyChange').off('click');
+          $('#deletePin').off('click');
         //this adds event listeners for the save cahnges and delete buttons
         $('#applyChange').on('click', function() {
         app.updatePin(imagePin,  $('#selectedNote').attr('value'));
@@ -528,29 +534,28 @@ var app = {
 //the function of this method is to delete pins found in the users library of pins
   deletePin: function(pinVal)
   {
-    //this retrives the objectID
-
-    //var imgPath = pinVal.Picture;
-
 
     //this calls for the image file to be removed form the database
-    // Backendless.Files.remove(imgPath).then(function() {
-    //
-    // }).catch(app.BackError);
+     Backendless.Files.remove(pinVal.Picture).then(function() {
 
-    //this calls the remove method of backendless to remove the pin
-    Backendless.Data.of("Pins").remove(pinVal).then(function() {
-      alert('Pin sucesfully deleted');
+       //this calls the remove method of backendless to remove the pin
+       Backendless.Data.of("Pins").remove(pinVal).then(function() {
+         alert('Pin sucesfully deleted');
 
-      //navigate to the data page  //navigaet to #Photopage
-        $.mobile.navigate("#DataPage");
-    }).catch(app.BackError);
+         //navigate to the data page  //navigaet to #Photopage
+           $.mobile.navigate("#DataPage");
+       }).catch(app.BackError);
+
+     }).catch(app.BackError);
+
+
   },
 
-   BackError: function(err)
+//this funciton is used to identify when an error occurs specifically due to a error caused by a backendless call
+   BackError: function(error)
    {
-      console.log("error message - " + err.message);
-      console.log("error code - " + err.statusCode);
+      console.log("error message - " + error.message);
+      console.log("error code - " + error.statusCode);
   },
 };
 app.initialize();
