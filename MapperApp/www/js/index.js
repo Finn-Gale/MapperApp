@@ -210,7 +210,7 @@ var app = {
   //this method is called when
   registerSuccess: function(regedUser)
   {
-    alert('Register sucesfful');
+    alert('Register successfull');
     app.userLogin(regedUser.email, regedUser.password);
   },
   //This function is used to log the users into the backendless
@@ -380,7 +380,7 @@ var app = {
 
 
 
-    //this creates
+    //this creates a variable that holds the image data which is a dissabled elemnt on the photopage. This is used for uploading the file later on
     var photoData = document.getElementById('photoData');
     photoData.style.visibility="hidden";
     photoData.value =imageData;
@@ -483,7 +483,7 @@ var app = {
     alert('No Note');
     }
   },
-  //THis function takes base 64 data wich is provided by bthe camera and converts it to a file which can be stored and uploaded to Backendless
+  //This function takes base 64 data wich is provided by bthe camera and converts it to a file which can be stored and uploaded to Backendless
   //The function takes in the image data which is the base64 data, and the format which de4fines what type of file is produced
   //The ideas that went into this code were heavily influenced by commenter Jürgen 'Kashban' Wahlmann on Stack overflow https://stackoverflow.com/questions/21227078/convert-base64-to-image-in-javascript-jquery
   ConvertBase64toFile: function(imageData, contentType)
