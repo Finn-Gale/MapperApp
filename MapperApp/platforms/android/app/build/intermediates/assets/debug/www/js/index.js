@@ -20,6 +20,8 @@
 //This sets up the link between this app and the Backendless service
 Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
 
+//This application uses two cordova plugins, the camera plugin and the network information plugin
+
 // Instance variables, (or somthing close to that)
 //var destinationType i used by the camera in order to take photos
 
@@ -51,11 +53,13 @@ var app = {
     //this is goign to be a check when document is ready
     $(document).ready(function() { console.log('Ready');});
 
+    //this creates an event listener to identify if the connection to the internet is lost
+    document.addEventListener("offline", app.onOffline);
+
   },
   // deviceready Event Handler
   //
-  // Bind any cordova events here. Common events are:
-  // 'pause', 'resume', etc.
+  // Bind any cordova events here.
   onDeviceReady: function()
   {
     //This calls the recived event method and sends the event through
@@ -65,7 +69,14 @@ var app = {
     //this is called hear because i need to be sure that there is a device that has a camera
     destinationType=navigator.camera.DestinationType;
 
+    //this enables the backendless promises which allows for asynchrounas callbacks
     Backendless.enablePromises();
+  },
+
+  onOffline: function()
+  {
+    //this provides an alert that lets the user know that there is no internet connection
+    alert('No internet connection, please reconnect device');
   },
 
   //This handles the pause event,
