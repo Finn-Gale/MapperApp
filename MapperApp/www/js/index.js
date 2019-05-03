@@ -17,6 +17,30 @@
 * under the License.
 */
 
+//References for Software found in this JS file
+//The JQuerry Team, (2014), JQuerryMobile, (Version: 1.4.5), [Software], [3rd April 2019].
+//Backendless, (2018), Backendless Cloud, (Version: 5.2.1), [Software], [3rd April 2019].
+
+
+//Plugin References
+// stevengill, alsorokin, agrieve, jcesarmobile, purplecabbage, infil00p, shazron, muratsu,
+//ldeluca, hermwong, riknoll, vladimir-kotikov, rakatyal, jamesjong, janpio, cmarcelk, surajpindoria,
+//filmaj, macdonst, daserge, dblotsky, DisruptiveMind, swbradshaw, csantanapr, clelland, zalun, bennmapes,
+//kicken, sgrebnov, bryanhiggins, hardeep, hazems, audreyso, jacquesdev, matrosov-nikita, Mikejo5001, omefire, m-revetria, cfjedimaster,
+//jsoref, stacic, jlongster, GedasGa, AlvaroHerrero, easywasdev, amercode, bvmensvoort, mvandervliet, ZenPylon, niccokunzmann, ferretdayo,
+//alpesh12, rpanadero, joseluisballesterosdelval, sryze, pugwonk, mhartington, nikhilkh, ochakov, sarangan12, t1st3, aliokan, PerfectionCSGO, nantunes, trubit,
+//kant2002, Gillardo, dpolivy, akinzie, cjpearson, gconnolly, thehuijb, vilic, krisselden, yoshifp, ktsour, kinfkong, eymorale, marti1125, javierbb31, kieferhagin, dpesch,
+//mgurreta, eirikhm, goforgold, mbillau, olragon, wildabeast, mwoghiren, (2018), cordova-plugin-camera, (Version: 4.0.3), [Software], [03/05/2019]
+
+// stevengill, agrieve, ldeluca, purplecabbage, alsorokin, clelland, hermwong,
+//PieterVanPoyer, shazron, cmarcelk, macdonst, filmaj, dblotsky, edparsons, sgrebnov, janpio, jcesarmobile, hardeep, bennmapes, matrosov-nikita, vladimir-kotikov, nikhilkh, infil00p, VinuL, rodms10, stacic, timbru31, maverickmishra, audreyso, kenichi-fukushima, NickyYo, rob-close, dankito, Mikejo5001, sarangan12, daserge, t1st3, pstoll, revolunet, sidferreira, cantecim, cfjedimaster, surajpindoria, marti1125, BBosman, guglie, javierbb31, mwoghiren, yannlugrin, eladkat, siovene, Zaspire, (2018), cordova-plugin-network-information, (Version: 2.0.1), [Software], [03/05/2019]
+
+// stevengill, shazron, dblotsky, agrieve, janpio, rob-close, csantanapr, eymorale, kant2002,
+//rossdonald97, filmaj, t1st3, vladimir-kotikov, vladimirnani, macdonst, nikhilkh, riknoll, infil00p,
+//revolunet, vaenow, eweap, agamemnus, cfjedimaster, aabluedragon,
+//starquake, jpchase, (2017), cordova-plugin-whitelist,(Version: 1.3.3),[Software], [03/05/2019]
+
+
 //This sets up the link between this app and the Backendless service
 Backendless.initApp("F86D06DB-CEBE-B738-FFD8-98DAB1FE7700","D45A8B4C-07FA-2B1F-FF9B-7835D4F8E900");
 
